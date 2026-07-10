@@ -273,18 +273,33 @@ function fileToResizedDataUrl(fileOrBlob, maxDim, quality) {
   });
 }
 
+function dataUrlToPngBlob(dataUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onerror = () => reject(new Error('Could not decode image'));
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), 'image/png');
+    };
+    img.src = dataUrl;
+  });
+}
+
 async function copyImageToClipboard(dataUrl) {
   try {
     if (!navigator.clipboard || !window.ClipboardItem) {
       showToast("This browser doesn't support copying images to the clipboard");
       return;
     }
-    // Pass the blob as a pending Promise directly into ClipboardItem, and call
-    // write() immediately (not after an await) — some browsers revoke clipboard
-    // permission if any async work happens before write() is invoked, since it
-    // looks like the call is no longer tied to the original tap/click.
-    const blobPromise = fetch(dataUrl).then(res => res.blob());
-    await navigator.clipboard.write([new ClipboardItem({ 'image/jpeg': blobPromise })]);
+    // image/png is the one format virtually every browser's Clipboard API can both
+    // write AND read back reliably — jpeg support on the read side is inconsistent,
+    // which is why paste was failing even though copy appeared to succeed.
+    // We still pass it as a pending Promise (not awaited first) and call write()
+    // immediately, so the browser doesn't lose track of this being tied to your tap.
+    const pngBlobPromise = dataUrlToPngBlob(dataUrl);
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlobPromise })]);
     showToast('Image copied — ready to paste');
   } catch (e) {
     showToast(`Couldn't copy image: ${e.message}`);
