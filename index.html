@@ -20,7 +20,7 @@
     --surface: #ffffff;
     --link-badge-ig-bg: #fce7f3; --link-badge-ig-text: #be185d;
     --link-badge-yt-bg: #fee2e2; --link-badge-yt-text: #b91c1c;
-    --tint-yt: #fecaca; --tint-ig: #fbcfe8;
+    --border-yt: #ef4444; --border-ig: #ec4899;
     --target-tag-bg: #fbdad8; --target-tag-text: #a3211d; --target-tag-active-bg: #f5b3af;
     --type-tag-bg: #e6def9; --type-tag-text: #5b21b6; --type-tag-active-bg: #cbb8f0;
   }
@@ -34,7 +34,7 @@
       --surface: #1f1f23;
       --link-badge-ig-bg: #3f1029; --link-badge-ig-text: #f9a8d4;
       --link-badge-yt-bg: #3f1212; --link-badge-yt-text: #fca5a5;
-      --tint-yt: #5c1f1f; --tint-ig: #5c1f45;
+      --border-yt: #f87171; --border-ig: #f472b6;
     }
     .card-thumb, .card-thumb-empty, .img-thumb { background: #141416; }
     .toast { background: #f7f7f8; color: #18181b; }
@@ -81,8 +81,8 @@
   .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
   .card { background: var(--surface); border: 1px solid var(--stone-200); border-radius: 16px; padding: 14px; cursor: pointer; position: relative; }
-  .card.card-tint-yt { background: var(--tint-yt); }
-  .card.card-tint-ig { background: var(--tint-ig); }
+  .card.card-tint-yt { border: 3px solid var(--border-yt); }
+  .card.card-tint-ig { border: 3px solid var(--border-ig); }
   .card:hover { border-color: var(--stone-300); }
   .card-zones { display: flex; gap: 12px; align-items: flex-start; }
   .card-left { flex-shrink: 0; width: 280px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
@@ -168,7 +168,7 @@
 // ============ CONFIG ============
 const SUPABASE_URL = 'https://tzryuaocamfbyzogruwo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gy0Fj6RSw1UdBJ8IaXFj1A_2vOKSCNF';
-const APP_VERSION = 'v4';
+const APP_VERSION = 'v5';
 
 const TARGET_TAGS = ['face','fascia','glutes','hamstrings','hips','kegel','lats','lower_back','neck',
   'nervous_system','pelvis','piriformis','posture','psoas','scapula',
