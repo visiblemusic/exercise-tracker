@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Movement Library</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Movement">
+<meta name="theme-color" content="#0f766e">
 <style>
   :root {
     --stone-50: #fafaf9; --stone-100: #f5f5f4; --stone-200: #e7e5e4; --stone-300: #d6d3d1;
@@ -11,6 +17,23 @@
     --teal-600: #0d9488; --teal-700: #0f766e; --teal-800: #115e59; --teal-50: #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4; --teal-800text:#115e59;
     --orange-500: #f97316; --orange-50: #fff7ed; --orange-300: #fdba74; --orange-600: #ea580c;
     --red-600: #dc2626; --red-50: #fef2f2; --red-200: #fecaca; --red-700: #b91c1c;
+    --surface: #ffffff;
+    --link-badge-ig-bg: #fce7f3; --link-badge-ig-text: #be185d;
+    --link-badge-yt-bg: #fee2e2; --link-badge-yt-text: #b91c1c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --stone-50: #18181b; --stone-100: #27272a; --stone-200: #3f3f46; --stone-300: #52525b;
+      --stone-400: #8b8b93; --stone-500: #b8b8c0; --stone-600: #d4d4d8; --stone-900: #f7f7f8;
+      --teal-600: #2dd4bf; --teal-700: #14b8a6; --teal-800: #5eead4; --teal-50: #0f2e2b; --teal-100: #134e4a; --teal-200: #115e59; --teal-800text:#5eead4;
+      --orange-500: #fb923c; --orange-50: #3a1a0a; --orange-300: #fb923c; --orange-600: #fdba74;
+      --red-600: #f87171; --red-50: #450a0a; --red-200: #7f1d1d; --red-700: #fca5a5;
+      --surface: #1f1f23;
+      --link-badge-ig-bg: #3f1029; --link-badge-ig-text: #f9a8d4;
+      --link-badge-yt-bg: #3f1212; --link-badge-yt-text: #fca5a5;
+    }
+    .card-thumb, .card-thumb-empty, .img-thumb { background: #141416; }
+    .toast { background: #f7f7f8; color: #18181b; }
   }
   * { box-sizing: border-box; }
   body {
@@ -26,7 +49,7 @@
   .btn { border: none; cursor: pointer; font-size: 14px; font-weight: 500; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; }
   .btn-primary { background: var(--teal-700); color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
   .btn-primary:hover { background: var(--teal-800); }
-  .btn-outline { background: white; border: 1px solid var(--stone-300); color: var(--stone-600); }
+  .btn-outline { background: var(--surface); border: 1px solid var(--stone-300); color: var(--stone-600); }
   .btn-outline:hover { border-color: var(--stone-400); }
   .btn-icon { padding: 8px 10px; }
   .btn:disabled { opacity: .6; cursor: default; }
@@ -35,23 +58,25 @@
 
   .filters { margin-bottom: 24px; }
   .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .fav-toggle { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 14px; font-weight: 500; padding: 6px 12px; cursor: pointer; }
+  .fav-toggle { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 14px; font-weight: 500; padding: 6px 12px; cursor: pointer; }
   .fav-toggle.active { background: var(--orange-500); border-color: var(--orange-500); color: white; }
   .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--stone-400); font-weight: 500; margin-bottom: 6px; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .chip-col { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
-  .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 12px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
+  .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 12px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
   .chip.active { background: var(--teal-700); border-color: var(--teal-700); color: white; }
   .chip:hover:not(.active) { border-color: var(--stone-400); }
   .version-tag { font-size: 15px; font-weight: 700; color: var(--stone-500); }
 
   .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
-  .card { background: white; border: 1px solid var(--stone-200); border-radius: 16px; padding: 14px; cursor: pointer; position: relative; }
+  .card { background: var(--surface); border: 1px solid var(--stone-200); border-radius: 16px; padding: 14px; cursor: pointer; position: relative; }
   .card:hover { border-color: var(--stone-300); }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-  .card-thumbs { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; min-width: 0; }
+  .card-zones { display: flex; gap: 12px; align-items: flex-start; }
+  .card-left { flex-shrink: 0; width: 184px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .card-middle { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; }
+  .card-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 44px; }
   .card-thumb { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .card-thumb-empty { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -76,11 +101,11 @@
   .back-btn:hover { background: var(--stone-100); }
   .field { margin-bottom: 24px; }
   .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--stone-400); font-weight: 500; margin-bottom: 6px; }
-  .input-row { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--stone-300); border-radius: 12px; padding: 8px 12px; }
-  .input-row input { border: none; outline: none; font-size: 14px; width: 100%; flex: 1; min-width: 0; background: transparent; }
-  textarea { width: 100%; font-size: 14px; background: white; border: 1px solid var(--stone-300); border-radius: 12px; padding: 8px 12px; outline: none; resize: none; font-family: inherit; }
+  .input-row { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--stone-300); border-radius: 12px; padding: 8px 12px; }
+  .input-row input { border: none; outline: none; font-size: 16px; width: 100%; flex: 1; min-width: 0; background: transparent; }
+  textarea { width: 100%; font-size: 16px; background: var(--surface); border: 1px solid var(--stone-300); border-radius: 12px; padding: 8px 12px; outline: none; resize: none; font-family: inherit; overflow: hidden; }
   textarea:focus { border-color: var(--teal-600); }
-  .fav-field-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 14px; font-weight: 500; cursor: pointer; }
+  .fav-field-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 14px; font-weight: 500; cursor: pointer; }
   .fav-field-btn.active { background: var(--orange-50); border-color: var(--orange-300); color: var(--orange-600); }
   .img-row { display: flex; flex-wrap: wrap; gap: 8px; }
   .img-thumb { position: relative; width: 200px; height: 200px; border-radius: 12px; overflow: hidden; border: 1px solid var(--stone-200); background: var(--stone-100); }
@@ -102,7 +127,7 @@
   .fixed-bar .btn { flex: 1; justify-content: center; padding: 10px; }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 60; padding: 16px; }
-  .modal { background: white; border-radius: 16px; padding: 20px; max-width: 380px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+  .modal { background: var(--surface); border-radius: 16px; padding: 20px; max-width: 380px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
   .modal h3 { margin: 0 0 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
   .modal p { font-size: 14px; color: var(--stone-500); margin: 0 0 16px; }
   .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
@@ -114,8 +139,8 @@
   .lightbox-overlay img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
 
   .link-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; font-family: ui-monospace, monospace; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.02em; }
-  .link-badge-ig { background: #fce7f3; color: #be185d; }
-  .link-badge-yt { background: #fee2e2; color: #b91c1c; }
+  .link-badge-ig { background: var(--link-badge-ig-bg); color: var(--link-badge-ig-text); }
+  .link-badge-yt { background: var(--link-badge-yt-bg); color: var(--link-badge-yt-text); }
   .link-badge-na { background: var(--stone-100); color: var(--stone-400); }
   .link-badge svg { width: 11px; height: 11px; }
 
@@ -130,13 +155,13 @@
 // ============ CONFIG ============
 const SUPABASE_URL = 'https://tzryuaocamfbyzogruwo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gy0Fj6RSw1UdBJ8IaXFj1A_2vOKSCNF';
-const APP_VERSION = 'v1.1';
+const APP_VERSION = 'v2';
 
 const TARGET_TAGS = ['face','fascia','glutes','hamstrings','hips','kegel','lats','lower_back','neck',
   'nervous_system_retraining','pelvis','piriformis','posture','psoas','scapula',
   'sciatic_nerve','shoulders','si_joint','side','spinal_flexibility','spinal_rotation',
   'thoracic_spine','traps','vagus_nerve'];
-const TYPE_TAGS = ['daily_stretch','energiser','exercise','massage','2people'];
+const TYPE_TAGS = ['daily_stretch','energiser','exercise','massage','2people','qi_gong'];
 
 // ============ ICONS (inline SVG, minimal Lucide-style) ============
 const ICONS = {
@@ -160,6 +185,11 @@ const ICONS = {
 function tagLabel(t) { return t.replace(/_/g, ' '); }
 function uid() { return 'ex_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
 function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+function autoGrowTextarea(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
 
 function linkTypeBadge(sourceLink) {
   if (sourceLink && /instagram\.com/i.test(sourceLink)) return { label: 'IG', cls: 'link-badge-ig', icon: ICONS.camera };
@@ -240,19 +270,12 @@ async function copyImageToClipboard(dataUrl) {
       showToast("This browser doesn't support copying images to the clipboard");
       return;
     }
-    // Clipboard API reliably supports PNG; convert the stored JPEG to PNG on the fly.
-    const pngBlob = await new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onerror = () => reject(new Error('Could not decode image'));
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
-        canvas.getContext('2d').drawImage(img, 0, 0);
-        canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), 'image/png');
-      };
-      img.src = dataUrl;
-    });
-    await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })]);
+    // Pass the blob as a pending Promise directly into ClipboardItem, and call
+    // write() immediately (not after an await) — some browsers revoke clipboard
+    // permission if any async work happens before write() is invoked, since it
+    // looks like the call is no longer tied to the original tap/click.
+    const blobPromise = fetch(dataUrl).then(res => res.blob());
+    await navigator.clipboard.write([new ClipboardItem({ 'image/jpeg': blobPromise })]);
     showToast('Image copied — ready to paste');
   } catch (e) {
     showToast(`Couldn't copy image: ${e.message}`);
@@ -576,18 +599,20 @@ function renderList() {
           const badge = linkTypeBadge(e.sourceLink);
           return `
           <div class="card" data-open-id="${esc(e.id)}">
-            <div class="card-top">
-              <div class="card-thumbs">
+            <div class="card-zones">
+              <div class="card-left">
                 ${e.thumbnails && e.thumbnails.length
                   ? e.thumbnails.map(t => `<div class="card-thumb"><img src="${t}" alt=""></div>`).join('')
                   : `<div class="card-thumb-empty">${ICONS.image}</div>`}
               </div>
-              <button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(e.favourite).replace('class="icon"', 'class="icon" style="width:32px;height:32px;"')}</button>
-            </div>
-            <div class="card-tags">
-              <span class="link-badge ${badge.cls}">${badge.icon}${badge.label}</span>
-              ${[...e.targetTags, ...e.typeTags].map(t => `<span class="tag-pill">${esc(tagLabel(t))}</span>`).join('')}
-              ${(e.targetTags.length + e.typeTags.length === 0) ? `<span style="font-size:10px;color:var(--stone-300);font-style:italic;">no tags</span>` : ''}
+              <div class="card-middle">
+                ${[...e.targetTags, ...e.typeTags].map(t => `<span class="tag-pill">${esc(tagLabel(t))}</span>`).join('')}
+                ${(e.targetTags.length + e.typeTags.length === 0) ? `<span style="font-size:10px;color:var(--stone-300);font-style:italic;">no tags</span>` : ''}
+              </div>
+              <div class="card-right">
+                ${e.favourite ? `<button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(true).replace('class="icon"', 'class="icon" style="width:32px;height:32px;"')}</button>` : ''}
+                ${badge.label !== 'N/A' ? `<span class="link-badge ${badge.cls}">${badge.icon}${badge.label}</span>` : ''}
+              </div>
             </div>
           </div>
         `;}).join('')}
@@ -726,7 +751,12 @@ function attachHandlers() {
     document.getElementById('form-cancel')?.addEventListener('click', backToList);
     document.getElementById('form-save')?.addEventListener('click', saveDraft);
     document.getElementById('f-sourceLink')?.addEventListener('input', (e) => { state.draft.sourceLink = e.target.value; });
-    document.getElementById('f-notes')?.addEventListener('input', (e) => { state.draft.notes = e.target.value; });
+    document.getElementById('f-notes')?.addEventListener('input', (e) => {
+      state.draft.notes = e.target.value;
+      autoGrowTextarea(e.target);
+    });
+    const notesEl = document.getElementById('f-notes');
+    if (notesEl) autoGrowTextarea(notesEl);
     document.getElementById('clear-notes-btn')?.addEventListener('click', () => { state.draft.notes = ''; render(); });
     document.getElementById('f-favourite')?.addEventListener('click', () => { state.draft.favourite = !state.draft.favourite; render(); });
     document.querySelectorAll('[data-draft-target-tag]').forEach(el => {
