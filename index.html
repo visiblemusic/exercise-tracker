@@ -20,8 +20,9 @@
     --surface: #ffffff;
     --link-badge-ig-bg: #fce7f3; --link-badge-ig-text: #be185d;
     --link-badge-yt-bg: #fee2e2; --link-badge-yt-text: #b91c1c;
-    --target-tag-bg: #e0645f; --target-tag-active: #b91c1c;
-    --type-tag-bg: #8b6fc4; --type-tag-active: #6d28d9;
+    --tint-yt: #fef2f2; --tint-ig: #fdf2f8;
+    --target-tag-bg: #fbdad8; --target-tag-text: #a3211d; --target-tag-active-bg: #f5b3af;
+    --type-tag-bg: #e6def9; --type-tag-text: #5b21b6; --type-tag-active-bg: #cbb8f0;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -33,6 +34,7 @@
       --surface: #1f1f23;
       --link-badge-ig-bg: #3f1029; --link-badge-ig-text: #f9a8d4;
       --link-badge-yt-bg: #3f1212; --link-badge-yt-text: #fca5a5;
+      --tint-yt: #2a1414; --tint-ig: #2a1420;
     }
     .card-thumb, .card-thumb-empty, .img-thumb { background: #141416; }
     .toast { background: #f7f7f8; color: #18181b; }
@@ -67,30 +69,32 @@
   .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .chip-col { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
-  .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 12px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
-  .chip.active { background: var(--teal-700); border-color: var(--teal-700); color: white; }
-  .chip-target { background: var(--target-tag-bg); border-color: var(--target-tag-bg); color: white; }
-  .chip-target.active { background: var(--target-tag-active); border-color: var(--target-tag-active); color: white; }
-  .chip-type { background: var(--type-tag-bg); border-color: var(--type-tag-bg); color: white; }
-  .chip-type.active { background: var(--type-tag-active); border-color: var(--type-tag-active); color: white; }
+  .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 13px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
+  .chip.active { background: var(--teal-700); border-color: var(--teal-700); color: white; font-weight: 700; }
+  .chip-target { background: var(--target-tag-bg); border-color: var(--target-tag-bg); color: var(--target-tag-text); font-weight: 700; }
+  .chip-target.active { background: var(--target-tag-active-bg); border-color: var(--target-tag-active-bg); color: var(--target-tag-text); }
+  .chip-type { background: var(--type-tag-bg); border-color: var(--type-tag-bg); color: var(--type-tag-text); font-weight: 700; }
+  .chip-type.active { background: var(--type-tag-active-bg); border-color: var(--type-tag-active-bg); color: var(--type-tag-text); }
   .chip:hover:not(.active) { border-color: var(--stone-400); }
   .version-tag { font-size: 15px; font-weight: 700; color: var(--stone-500); }
 
   .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
   .card { background: var(--surface); border: 1px solid var(--stone-200); border-radius: 16px; padding: 14px; cursor: pointer; position: relative; }
+  .card.card-tint-yt { background: var(--tint-yt); }
+  .card.card-tint-ig { background: var(--tint-ig); }
   .card:hover { border-color: var(--stone-300); }
   .card-zones { display: flex; gap: 12px; align-items: flex-start; }
-  .card-left { flex-shrink: 0; width: 184px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .card-left { flex-shrink: 0; width: 232px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
   .card-middle { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; }
   .card-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 44px; }
-  .card-thumb { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .card-thumb { width: 104px; height: 104px; border-radius: 10px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .card-thumb-empty { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-thumb-empty { width: 104px; height: 104px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .tag-pill { font-size: 12px; line-height: 1; font-family: ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; display: inline-block; color: white; }
-  .tag-pill-target { background: var(--target-tag-bg); }
-  .tag-pill-type { background: var(--type-tag-bg); }
+  .tag-pill { font-size: 13px; line-height: 1; font-family: ui-monospace, monospace; padding: 4px 7px; border-radius: 4px; display: inline-block; font-weight: 700; }
+  .tag-pill-target { background: var(--target-tag-bg); color: var(--target-tag-text); }
+  .tag-pill-type { background: var(--type-tag-bg); color: var(--type-tag-text); }
   .fav-btn { background: none; border: none; cursor: pointer; color: var(--orange-500); padding: 4px; flex-shrink: 0; height: fit-content; }
   .empty-state { text-align: center; padding: 64px 0; color: var(--stone-400); font-size: 14px; }
 
@@ -164,10 +168,10 @@
 // ============ CONFIG ============
 const SUPABASE_URL = 'https://tzryuaocamfbyzogruwo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gy0Fj6RSw1UdBJ8IaXFj1A_2vOKSCNF';
-const APP_VERSION = 'v2';
+const APP_VERSION = 'v3';
 
 const TARGET_TAGS = ['face','fascia','glutes','hamstrings','hips','kegel','lats','lower_back','neck',
-  'nervous_system_retraining','pelvis','piriformis','posture','psoas','scapula',
+  'nervous_system','pelvis','piriformis','posture','psoas','scapula',
   'sciatic_nerve','shoulders','si_joint','side','spinal_flexibility','spinal_rotation',
   'thoracic_spine','traps','vagus_nerve'];
 const TYPE_TAGS = ['daily_stretch','energiser','exercise','massage','2people','qi_gong'];
@@ -200,10 +204,10 @@ function autoGrowTextarea(el) {
   el.style.height = el.scrollHeight + 'px';
 }
 
-function linkTypeBadge(sourceLink) {
-  if (sourceLink && /instagram\.com/i.test(sourceLink)) return { label: 'IG', cls: 'link-badge-ig', icon: ICONS.camera };
-  if (sourceLink && /(youtube\.com|youtu\.be)/i.test(sourceLink)) return { label: 'YT', cls: 'link-badge-yt', icon: ICONS.play };
-  return { label: 'N/A', cls: 'link-badge-na', icon: ICONS.linkOff };
+function linkTypeTint(sourceLink) {
+  if (sourceLink && /instagram\.com/i.test(sourceLink)) return 'card-tint-ig';
+  if (sourceLink && /(youtube\.com|youtu\.be)/i.test(sourceLink)) return 'card-tint-yt';
+  return '';
 }
 
 // ============ Supabase REST helper ============
@@ -624,9 +628,9 @@ function renderList() {
 
       <div class="grid">
         ${filtered.map(e => {
-          const badge = linkTypeBadge(e.sourceLink);
+          const tintClass = linkTypeTint(e.sourceLink);
           return `
-          <div class="card" data-open-id="${esc(e.id)}">
+          <div class="card ${tintClass}" data-open-id="${esc(e.id)}">
             <div class="card-zones">
               <div class="card-left">
                 ${e.thumbnails && e.thumbnails.length
@@ -640,7 +644,6 @@ function renderList() {
               </div>
               <div class="card-right">
                 ${e.favourite ? `<button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(true).replace('class="icon"', 'class="icon" style="width:32px;height:32px;"')}</button>` : ''}
-                ${badge.label !== 'N/A' ? `<span class="link-badge ${badge.cls}">${badge.icon}${badge.label}</span>` : ''}
               </div>
             </div>
           </div>
