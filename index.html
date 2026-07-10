@@ -20,7 +20,7 @@
     --surface: #ffffff;
     --link-badge-ig-bg: #fce7f3; --link-badge-ig-text: #be185d;
     --link-badge-yt-bg: #fee2e2; --link-badge-yt-text: #b91c1c;
-    --tint-yt: #fef2f2; --tint-ig: #fdf2f8;
+    --tint-yt: #fecaca; --tint-ig: #fbcfe8;
     --target-tag-bg: #fbdad8; --target-tag-text: #a3211d; --target-tag-active-bg: #f5b3af;
     --type-tag-bg: #e6def9; --type-tag-text: #5b21b6; --type-tag-active-bg: #cbb8f0;
   }
@@ -34,7 +34,7 @@
       --surface: #1f1f23;
       --link-badge-ig-bg: #3f1029; --link-badge-ig-text: #f9a8d4;
       --link-badge-yt-bg: #3f1212; --link-badge-yt-text: #fca5a5;
-      --tint-yt: #2a1414; --tint-ig: #2a1420;
+      --tint-yt: #5c1f1f; --tint-ig: #5c1f45;
     }
     .card-thumb, .card-thumb-empty, .img-thumb { background: #141416; }
     .toast { background: #f7f7f8; color: #18181b; }
@@ -85,12 +85,12 @@
   .card.card-tint-ig { background: var(--tint-ig); }
   .card:hover { border-color: var(--stone-300); }
   .card-zones { display: flex; gap: 12px; align-items: flex-start; }
-  .card-left { flex-shrink: 0; width: 232px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .card-left { flex-shrink: 0; width: 280px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
   .card-middle { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; }
   .card-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 44px; }
-  .card-thumb { width: 104px; height: 104px; border-radius: 10px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .card-thumb { width: 132px; height: 132px; border-radius: 10px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .card-thumb-empty { width: 104px; height: 104px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-thumb-empty { width: 132px; height: 132px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
   .tag-pill { font-size: 13px; line-height: 1; font-family: ui-monospace, monospace; padding: 4px 7px; border-radius: 4px; display: inline-block; font-weight: 700; }
   .tag-pill-target { background: var(--target-tag-bg); color: var(--target-tag-text); }
@@ -168,7 +168,7 @@
 // ============ CONFIG ============
 const SUPABASE_URL = 'https://tzryuaocamfbyzogruwo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gy0Fj6RSw1UdBJ8IaXFj1A_2vOKSCNF';
-const APP_VERSION = 'v3';
+const APP_VERSION = 'v4';
 
 const TARGET_TAGS = ['face','fascia','glutes','hamstrings','hips','kegel','lats','lower_back','neck',
   'nervous_system','pelvis','piriformis','posture','psoas','scapula',
@@ -178,7 +178,13 @@ const TYPE_TAGS = ['daily_stretch','energiser','exercise','massage','2people','q
 
 // ============ ICONS (inline SVG, minimal Lucide-style) ============
 const ICONS = {
-  heart: (filled) => `<svg class="icon" viewBox="0 0 24 24" ${filled ? 'fill="currentColor"' : ''}><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`,
+  heart: (filled, size) => {
+    const styleParts = [];
+    if (filled) styleParts.push('fill:currentColor');
+    if (size) styleParts.push(`width:${size}px`, `height:${size}px`);
+    const styleAttr = styleParts.length ? ` style="${styleParts.join(';')}"` : '';
+    return `<svg class="icon" viewBox="0 0 24 24"${styleAttr}><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`;
+  },
   plus: `<svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,
   x: `<svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>`,
   trash: `<svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>`,
@@ -205,8 +211,10 @@ function autoGrowTextarea(el) {
 }
 
 function linkTypeTint(sourceLink) {
-  if (sourceLink && /instagram\.com/i.test(sourceLink)) return 'card-tint-ig';
-  if (sourceLink && /(youtube\.com|youtu\.be)/i.test(sourceLink)) return 'card-tint-yt';
+  const s = (sourceLink || '').trim();
+  if (!s) return '';
+  if (/instagram\.com/i.test(s)) return 'card-tint-ig';
+  if (/(youtube\.com|youtube-nocookie\.com|youtu\.be)/i.test(s)) return 'card-tint-yt';
   return '';
 }
 
@@ -643,7 +651,7 @@ function renderList() {
                 ${(e.targetTags.length + e.typeTags.length === 0) ? `<span style="font-size:10px;color:var(--stone-300);font-style:italic;">no tags</span>` : ''}
               </div>
               <div class="card-right">
-                ${e.favourite ? `<button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(true).replace('class="icon"', 'class="icon" style="width:32px;height:32px;"')}</button>` : ''}
+                ${e.favourite ? `<button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(true, 32)}</button>` : ''}
               </div>
             </div>
           </div>
