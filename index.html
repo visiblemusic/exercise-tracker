@@ -20,7 +20,7 @@
     --surface: #ffffff;
     --link-badge-ig-bg: #fce7f3; --link-badge-ig-text: #be185d;
     --link-badge-yt-bg: #fee2e2; --link-badge-yt-text: #b91c1c;
-    --border-yt: #dc2626; --border-ig: #a855f7;
+    --border-yt: #dc2626; --border-ig: #4f46e5;
     --target-tag-bg: #fbdad8; --target-tag-text: #a3211d; --target-tag-active-bg: #f5b3af;
     --type-tag-bg: #e6def9; --type-tag-text: #5b21b6; --type-tag-active-bg: #cbb8f0;
   }
@@ -34,7 +34,7 @@
       --surface: #1f1f23;
       --link-badge-ig-bg: #3f1029; --link-badge-ig-text: #f9a8d4;
       --link-badge-yt-bg: #3f1212; --link-badge-yt-text: #fca5a5;
-      --border-yt: #f87171; --border-ig: #c084fc;
+      --border-yt: #f87171; --border-ig: #818cf8;
     }
     .card-thumb, .card-thumb-empty, .img-thumb { background: #141416; }
     .toast { background: #f7f7f8; color: #18181b; }
@@ -51,7 +51,7 @@
   header.top { padding: 32px 0 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
   h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
   .subtitle { font-size: 14px; color: var(--stone-500); margin-top: 2px; }
-  .btn { border: none; cursor: pointer; font-size: 14px; font-weight: 500; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; }
+  .btn { border: none; cursor: pointer; font-size: 16px; font-weight: 500; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; }
   .btn-primary { background: var(--teal-700); color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
   .btn-primary:hover { background: var(--teal-800); }
   .btn-outline { background: var(--surface); border: 1px solid var(--stone-300); color: var(--stone-600); }
@@ -59,17 +59,17 @@
   .btn-icon { padding: 8px 10px; }
   .btn:disabled { opacity: .6; cursor: default; }
   .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .link-btn { background: none; border: none; font-size: 12px; color: var(--stone-400); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .link-btn { background: none; border: none; font-size: 14px; color: var(--stone-400); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 
   .filters { margin-bottom: 24px; }
   .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .fav-toggle { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 14px; font-weight: 500; padding: 6px 12px; cursor: pointer; }
+  .fav-toggle { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 16px; font-weight: 500; padding: 6px 12px; cursor: pointer; }
   .fav-toggle.active { background: var(--orange-500); border-color: var(--orange-500); color: white; }
-  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--stone-400); font-weight: 500; margin-bottom: 6px; }
+  .section-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--stone-400); font-weight: 500; margin-bottom: 6px; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .chip-col { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
-  .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 13px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
+  .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: var(--surface); color: var(--stone-600); font-size: 14px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
   .chip.active { background: var(--teal-700); border-color: var(--teal-700); color: white; font-weight: 700; }
   .chip-target { background: var(--target-tag-bg); border-color: var(--target-tag-bg); color: var(--target-tag-text); font-weight: 700; }
   .chip-target.active { background: var(--target-tag-active-bg); border-color: var(--target-tag-active-bg); color: var(--target-tag-text); }
@@ -92,7 +92,7 @@
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .card-thumb-empty { width: 132px; height: 132px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .tag-pill { font-size: 13px; line-height: 1; font-family: ui-monospace, monospace; padding: 4px 7px; border-radius: 4px; display: inline-block; font-weight: 700; }
+  .tag-pill { font-size: 14px; line-height: 1; font-family: ui-monospace, monospace; padding: 4px 7px; border-radius: 4px; display: inline-block; font-weight: 700; }
   .tag-pill-target { background: var(--target-tag-bg); color: var(--target-tag-text); }
   .tag-pill-type { background: var(--type-tag-bg); color: var(--type-tag-text); }
   .fav-btn { background: none; border: none; cursor: pointer; color: var(--orange-500); padding: 4px; flex-shrink: 0; height: fit-content; }
@@ -168,7 +168,7 @@
 // ============ CONFIG ============
 const SUPABASE_URL = 'https://tzryuaocamfbyzogruwo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gy0Fj6RSw1UdBJ8IaXFj1A_2vOKSCNF';
-const APP_VERSION = 'v6';
+const APP_VERSION = 'v7';
 
 const TARGET_TAGS = ['face','fascia','glutes','hamstrings','hips','kegel','lats','lower_back','neck',
   'nervous_system','pelvis','piriformis','posture','psoas','scapula',
@@ -432,11 +432,22 @@ function openNew() {
   window.scrollTo(0, 0);
 }
 
+function resetViewportZoom() {
+  const viewport = document.querySelector('meta[name="viewport"]');
+  if (!viewport) return;
+  const original = viewport.getAttribute('content');
+  viewport.setAttribute('content', original + ', maximum-scale=1.0');
+  setTimeout(() => viewport.setAttribute('content', original), 60);
+}
+
 function backToList() {
   state.view = 'list';
   state.maximizedImage = null;
   render();
-  requestAnimationFrame(() => window.scrollTo(0, savedListScrollY));
+  requestAnimationFrame(() => {
+    window.scrollTo(0, savedListScrollY);
+    resetViewportZoom();
+  });
 }
 
 async function saveDraft() {
