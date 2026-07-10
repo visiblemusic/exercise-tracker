@@ -44,7 +44,7 @@
   .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 12px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
   .chip.active { background: var(--teal-700); border-color: var(--teal-700); color: white; }
   .chip:hover:not(.active) { border-color: var(--stone-400); }
-  .version-tag { font-size: 11px; color: var(--stone-300); font-family: ui-monospace, monospace; }
+  .version-tag { font-size: 15px; font-weight: 700; color: var(--stone-500); }
 
   .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
@@ -56,7 +56,7 @@
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .card-thumb-empty { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .tag-pill { font-size: 10px; line-height: 1; font-family: ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; background: var(--stone-100); color: var(--stone-500); display: inline-block; }
+  .tag-pill { font-size: 12px; line-height: 1; font-family: ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; background: var(--stone-100); color: var(--stone-500); display: inline-block; }
   .fav-btn { background: none; border: none; cursor: pointer; color: var(--orange-500); padding: 4px; flex-shrink: 0; height: fit-content; }
   .empty-state { text-align: center; padding: 64px 0; color: var(--stone-400); font-size: 14px; }
 
@@ -83,12 +83,12 @@
   .fav-field-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 14px; font-weight: 500; cursor: pointer; }
   .fav-field-btn.active { background: var(--orange-50); border-color: var(--orange-300); color: var(--orange-600); }
   .img-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .img-thumb { position: relative; width: 160px; height: 160px; border-radius: 12px; overflow: hidden; border: 1px solid var(--stone-200); }
-  .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .img-thumb { position: relative; width: 200px; height: 200px; border-radius: 12px; overflow: hidden; border: 1px solid var(--stone-200); background: var(--stone-100); }
+  .img-thumb img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
   .img-actions { position: absolute; top: 4px; right: 4px; display: flex; gap: 4px; }
   .img-action-btn { background: rgba(0,0,0,.6); color: white; border: none; border-radius: 999px; padding: 5px; cursor: pointer; display: flex; }
   .img-remove { background: rgba(220,38,38,.85); color: white; border: none; border-radius: 999px; padding: 5px; cursor: pointer; display: flex; }
-  .img-add-split { width: 160px; height: 160px; border-radius: 12px; border: 2px dashed var(--stone-300); display: flex; flex-direction: column; overflow: hidden; }
+  .img-add-split { width: 200px; height: 200px; border-radius: 12px; border: 2px dashed var(--stone-300); display: flex; flex-direction: column; overflow: hidden; }
   .img-add-half { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--stone-400); background: none; border: none; cursor: pointer; gap: 2px; }
   .img-add-half:hover { background: var(--stone-100); color: var(--stone-500); }
   .img-add-half span { font-size: 11px; }
@@ -109,6 +109,17 @@
 
   svg.icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
   .hidden { display: none; }
+
+  .lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 80; display: flex; align-items: center; justify-content: center; cursor: zoom-out; padding: 24px; }
+  .lightbox-overlay img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+
+  .link-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; font-family: ui-monospace, monospace; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.02em; }
+  .link-badge-ig { background: #fce7f3; color: #be185d; }
+  .link-badge-yt { background: #fee2e2; color: #b91c1c; }
+  .link-badge-na { background: var(--stone-100); color: var(--stone-400); }
+  .link-badge svg { width: 11px; height: 11px; }
+
+  .clear-notes-btn { margin-top: 6px; font-size: 12px; color: var(--stone-400); background: none; border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -140,12 +151,21 @@ const ICONS = {
   alert: `<svg class="icon" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>`,
   upload: `<svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>`,
   copy: `<svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
-  clipboard: `<svg class="icon" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/></svg>`
+  clipboard: `<svg class="icon" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/></svg>`,
+  camera: `<svg class="icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
+  play: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg>`,
+  linkOff: `<svg class="icon" viewBox="0 0 24 24"><path d="M18.4 9.6a5 5 0 0 0-7-7l-1 1M5.6 14.4a5 5 0 0 0 7 7l1-1M2 2l20 20"/></svg>`
 };
 
 function tagLabel(t) { return t.replace(/_/g, ' '); }
 function uid() { return 'ex_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
 function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+function linkTypeBadge(sourceLink) {
+  if (sourceLink && /instagram\.com/i.test(sourceLink)) return { label: 'IG', cls: 'link-badge-ig', icon: ICONS.camera };
+  if (sourceLink && /(youtube\.com|youtu\.be)/i.test(sourceLink)) return { label: 'YT', cls: 'link-badge-yt', icon: ICONS.play };
+  return { label: 'N/A', cls: 'link-badge-na', icon: ICONS.linkOff };
+}
 
 // ============ Supabase REST helper ============
 async function sb(path, options = {}) {
@@ -296,7 +316,8 @@ const state = {
   confirmDeleteId: null,
   imgBusy: false,
   importProgress: null,
-  diagRunning: false
+  diagRunning: false,
+  maximizedImage: null
 };
 let savedListScrollY = 0;
 
@@ -316,7 +337,7 @@ function showToast(msg) {
 async function loadList() {
   state.loading = true; state.loadError = null; render();
   try {
-    const rows = await sb('/exercises?select=id,favourite,target_tags,type_tags,thumbnails,created_at&order=created_at.desc');
+    const rows = await sb('/exercises?select=id,favourite,target_tags,type_tags,thumbnails,source_link,created_at&order=created_at.desc');
     state.list = (rows || []).map(rowToExercise);
   } catch (e) {
     state.loadError = e.message;
@@ -328,20 +349,30 @@ async function loadList() {
 
 async function openEdit(id) {
   savedListScrollY = window.scrollY;
+  state.maximizedImage = null;
   try {
     const rows = await sb(`/exercises?id=eq.${id}&select=*`);
     if (rows && rows[0]) {
       state.draft = rowToExercise(rows[0]);
       state.view = 'form';
       render();
+      window.scrollTo(0, 0);
     } else showToast('Could not find that exercise');
   } catch (e) { showToast(`Couldn't load that exercise: ${e.message}`); }
 }
 
-function openNew() { savedListScrollY = window.scrollY; state.draft = emptyDraft(); state.view = 'form'; render(); }
+function openNew() {
+  savedListScrollY = window.scrollY;
+  state.maximizedImage = null;
+  state.draft = emptyDraft();
+  state.view = 'form';
+  render();
+  window.scrollTo(0, 0);
+}
 
 function backToList() {
   state.view = 'list';
+  state.maximizedImage = null;
   render();
   requestAnimationFrame(() => window.scrollTo(0, savedListScrollY));
 }
@@ -541,7 +572,9 @@ function renderList() {
       ${!state.loading && filtered.length === 0 && !state.loadError ? `<div class="empty-state">${total === 0 ? "Nothing saved yet — add your first exercise." : "No exercises match these filters."}</div>` : ''}
 
       <div class="grid">
-        ${filtered.map(e => `
+        ${filtered.map(e => {
+          const badge = linkTypeBadge(e.sourceLink);
+          return `
           <div class="card" data-open-id="${esc(e.id)}">
             <div class="card-top">
               <div class="card-thumbs">
@@ -552,11 +585,12 @@ function renderList() {
               <button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(e.favourite).replace('class="icon"', 'class="icon" style="width:32px;height:32px;"')}</button>
             </div>
             <div class="card-tags">
+              <span class="link-badge ${badge.cls}">${badge.icon}${badge.label}</span>
               ${[...e.targetTags, ...e.typeTags].map(t => `<span class="tag-pill">${esc(tagLabel(t))}</span>`).join('')}
               ${(e.targetTags.length + e.typeTags.length === 0) ? `<span style="font-size:10px;color:var(--stone-300);font-style:italic;">no tags</span>` : ''}
             </div>
           </div>
-        `).join('')}
+        `;}).join('')}
       </div>
 
       ${state.confirmDeleteId ? renderConfirmModal() : ''}
@@ -593,7 +627,7 @@ function renderForm() {
         <div class="img-row">
           ${d.images.map((img, i) => `
             <div class="img-thumb">
-              <img src="${img}" alt="">
+              <img src="${img}" alt="" data-view-img="${i}">
               <div class="img-actions">
                 <button class="img-action-btn" data-copy-img="${i}" title="Copy image">${ICONS.copy}</button>
                 <button class="img-remove" data-remove-img="${i}" title="Delete image">${ICONS.x}</button>
@@ -624,6 +658,7 @@ function renderForm() {
       <div class="field">
         <label>Notes</label>
         <textarea id="f-notes" rows="4" placeholder="Cues, reps, how it felt...">${esc(d.notes)}</textarea>
+        <button class="clear-notes-btn" id="clear-notes-btn">Clear notes</button>
       </div>
 
       <div class="field">
@@ -651,6 +686,11 @@ function renderForm() {
     </div>
 
     ${state.confirmDeleteId ? renderConfirmModal() : ''}
+    ${state.maximizedImage ? `
+      <div class="lightbox-overlay" id="lightbox-overlay">
+        <img src="${state.maximizedImage}" alt="">
+      </div>
+    ` : ''}
   `;
 }
 
@@ -687,6 +727,7 @@ function attachHandlers() {
     document.getElementById('form-save')?.addEventListener('click', saveDraft);
     document.getElementById('f-sourceLink')?.addEventListener('input', (e) => { state.draft.sourceLink = e.target.value; });
     document.getElementById('f-notes')?.addEventListener('input', (e) => { state.draft.notes = e.target.value; });
+    document.getElementById('clear-notes-btn')?.addEventListener('click', () => { state.draft.notes = ''; render(); });
     document.getElementById('f-favourite')?.addEventListener('click', () => { state.draft.favourite = !state.draft.favourite; render(); });
     document.querySelectorAll('[data-draft-target-tag]').forEach(el => {
       el.addEventListener('click', () => toggleDraftTag('target', el.getAttribute('data-draft-target-tag')));
@@ -707,6 +748,17 @@ function attachHandlers() {
         const idx = parseInt(el.getAttribute('data-copy-img'), 10);
         copyImageToClipboard(state.draft.images[idx]);
       });
+    });
+    document.querySelectorAll('[data-view-img]').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.getAttribute('data-view-img'), 10);
+        state.maximizedImage = state.draft.images[idx];
+        render();
+      });
+    });
+    document.getElementById('lightbox-overlay')?.addEventListener('click', () => {
+      state.maximizedImage = null;
+      render();
     });
     document.getElementById('form-delete-btn')?.addEventListener('click', () => { state.confirmDeleteId = state.draft.id; render(); });
     wireModal();
