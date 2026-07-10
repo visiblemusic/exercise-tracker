@@ -39,21 +39,24 @@
   .fav-toggle.active { background: var(--orange-500); border-color: var(--orange-500); color: white; }
   .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--stone-400); font-weight: 500; margin-bottom: 6px; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .chip-col { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
   .chip { border-radius: 999px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 12px; padding: 5px 10px; cursor: pointer; font-family: ui-monospace, monospace; transition: background-color .12s, color .12s, border-color .12s; }
   .chip.active { background: var(--teal-700); border-color: var(--teal-700); color: white; }
   .chip:hover:not(.active) { border-color: var(--stone-400); }
+  .version-tag { font-size: 11px; color: var(--stone-300); font-family: ui-monospace, monospace; }
 
   .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
-  .card { background: white; border: 1px solid var(--stone-200); border-radius: 16px; padding: 12px; cursor: pointer; position: relative; }
+  .card { background: white; border: 1px solid var(--stone-200); border-radius: 16px; padding: 14px; cursor: pointer; position: relative; }
   .card:hover { border-color: var(--stone-300); }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
-  .card-thumbs { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
-  .card-thumb { width: 44px; height: 44px; border-radius: 8px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .card-thumbs { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; min-width: 0; }
+  .card-thumb { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .card-thumb-empty { width: 44px; height: 44px; border-radius: 8px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-thumb-empty { width: 88px; height: 88px; border-radius: 10px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .tag-pill { font-size: 10px; font-family: ui-monospace, monospace; padding: 2px 6px; border-radius: 4px; background: var(--stone-100); color: var(--stone-500); }
+  .tag-pill { font-size: 10px; line-height: 1; font-family: ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; background: var(--stone-100); color: var(--stone-500); display: inline-block; }
   .fav-btn { background: none; border: none; cursor: pointer; color: var(--orange-500); padding: 4px; flex-shrink: 0; height: fit-content; }
   .empty-state { text-align: center; padding: 64px 0; color: var(--stone-400); font-size: 14px; }
 
@@ -74,23 +77,25 @@
   .field { margin-bottom: 24px; }
   .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--stone-400); font-weight: 500; margin-bottom: 6px; }
   .input-row { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--stone-300); border-radius: 12px; padding: 8px 12px; }
-  .input-row input { border: none; outline: none; font-size: 14px; width: 100%; background: transparent; }
+  .input-row input { border: none; outline: none; font-size: 14px; width: 100%; flex: 1; min-width: 0; background: transparent; }
   textarea { width: 100%; font-size: 14px; background: white; border: 1px solid var(--stone-300); border-radius: 12px; padding: 8px 12px; outline: none; resize: none; font-family: inherit; }
   textarea:focus { border-color: var(--teal-600); }
   .fav-field-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--stone-300); background: white; color: var(--stone-600); font-size: 14px; font-weight: 500; cursor: pointer; }
   .fav-field-btn.active { background: var(--orange-50); border-color: var(--orange-300); color: var(--orange-600); }
   .img-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .img-thumb { position: relative; width: 80px; height: 80px; border-radius: 10px; overflow: hidden; border: 1px solid var(--stone-200); }
+  .img-thumb { position: relative; width: 160px; height: 160px; border-radius: 12px; overflow: hidden; border: 1px solid var(--stone-200); }
   .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .img-actions { position: absolute; top: 2px; right: 2px; display: flex; gap: 3px; }
-  .img-action-btn { background: rgba(0,0,0,.6); color: white; border: none; border-radius: 999px; padding: 3px; cursor: pointer; display: flex; }
-  .img-remove { background: rgba(220,38,38,.85); color: white; border: none; border-radius: 999px; padding: 3px; cursor: pointer; display: flex; }
-  .img-add-split { width: 80px; height: 80px; border-radius: 10px; border: 2px dashed var(--stone-300); display: flex; flex-direction: column; overflow: hidden; }
-  .img-add-half { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--stone-400); background: none; border: none; cursor: pointer; gap: 1px; }
+  .img-actions { position: absolute; top: 4px; right: 4px; display: flex; gap: 4px; }
+  .img-action-btn { background: rgba(0,0,0,.6); color: white; border: none; border-radius: 999px; padding: 5px; cursor: pointer; display: flex; }
+  .img-remove { background: rgba(220,38,38,.85); color: white; border: none; border-radius: 999px; padding: 5px; cursor: pointer; display: flex; }
+  .img-add-split { width: 160px; height: 160px; border-radius: 12px; border: 2px dashed var(--stone-300); display: flex; flex-direction: column; overflow: hidden; }
+  .img-add-half { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--stone-400); background: none; border: none; cursor: pointer; gap: 2px; }
   .img-add-half:hover { background: var(--stone-100); color: var(--stone-500); }
-  .img-add-half span { font-size: 9px; }
+  .img-add-half span { font-size: 11px; }
   .img-add-divider { height: 1px; background: var(--stone-200); }
   .delete-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--red-600); font-weight: 500; background: none; border: none; cursor: pointer; }
+  .visit-link-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--teal-700); font-weight: 500; background: var(--teal-50); border: 1px solid var(--teal-200); border-radius: 8px; padding: 6px 10px; text-decoration: none; white-space: nowrap; }
+  .visit-link-btn:hover { background: var(--teal-100); }
 
   .fixed-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(250,250,249,0.95); backdrop-filter: blur(6px); border-top: 1px solid var(--stone-200); padding: 12px 16px; }
   .fixed-bar-inner { max-width: 640px; margin: 0 auto; display: flex; gap: 8px; }
@@ -114,6 +119,7 @@
 // ============ CONFIG ============
 const SUPABASE_URL = 'https://tzryuaocamfbyzogruwo.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gy0Fj6RSw1UdBJ8IaXFj1A_2vOKSCNF';
+const APP_VERSION = 'v1.1';
 
 const TARGET_TAGS = ['face','fascia','glutes','hamstrings','hips','kegel','lats','lower_back','neck',
   'nervous_system_retraining','pelvis','piriformis','posture','psoas','scapula',
@@ -292,6 +298,7 @@ const state = {
   importProgress: null,
   diagRunning: false
 };
+let savedListScrollY = 0;
 
 function emptyDraft() {
   return { id: null, sourceLink: '', notes: '', favourite: false, targetTags: [], typeTags: [], images: [], thumbnails: [] };
@@ -320,6 +327,7 @@ async function loadList() {
 }
 
 async function openEdit(id) {
+  savedListScrollY = window.scrollY;
   try {
     const rows = await sb(`/exercises?id=eq.${id}&select=*`);
     if (rows && rows[0]) {
@@ -330,7 +338,13 @@ async function openEdit(id) {
   } catch (e) { showToast(`Couldn't load that exercise: ${e.message}`); }
 }
 
-function openNew() { state.draft = emptyDraft(); state.view = 'form'; render(); }
+function openNew() { savedListScrollY = window.scrollY; state.draft = emptyDraft(); state.view = 'form'; render(); }
+
+function backToList() {
+  state.view = 'list';
+  render();
+  requestAnimationFrame(() => window.scrollTo(0, savedListScrollY));
+}
 
 async function saveDraft() {
   state.saving = true; render();
@@ -349,8 +363,9 @@ async function saveDraft() {
       await sb(`/exercises?id=eq.${id}`, { method: 'PATCH', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify(row) });
     }
     showToast('Saved');
-    state.view = 'list';
+    backToList();
     await loadList();
+    requestAnimationFrame(() => window.scrollTo(0, savedListScrollY));
   } catch (e) {
     showToast(`Couldn't save: ${e.message}`);
   } finally {
@@ -378,8 +393,8 @@ async function deleteExercise(id) {
     state.list = state.list.filter(e => e.id !== id);
     state.confirmDeleteId = null;
     showToast('Deleted');
-    if (state.view === 'form') { state.view = 'list'; }
-    render();
+    if (state.view === 'form') { backToList(); }
+    else render();
   } catch (e) { showToast(`Couldn't delete: ${e.message}`); }
 }
 
@@ -486,7 +501,7 @@ function renderList() {
     <div class="wrap">
       <header class="top">
         <div>
-          <h1>Movement library</h1>
+          <h1>Movement library <span class="version-tag">${APP_VERSION}</span></h1>
           <div class="subtitle">${total} exercise${total === 1 ? '' : 's'} saved</div>
         </div>
         <div class="header-actions">
@@ -510,13 +525,15 @@ function renderList() {
           <button class="fav-toggle ${state.favOnly ? 'active' : ''}" id="fav-toggle">${ICONS.heart(state.favOnly)} Favourites</button>
           ${state.selectedTags.size > 0 ? `<button class="link-btn" id="clear-filters">Clear tag filters (${state.selectedTags.size})</button>` : ''}
         </div>
-        <div style="margin-bottom:12px;">
-          <div class="section-label">Targets</div>
-          <div class="chip-row">${TARGET_TAGS.map(t => chipHtml(t, state.selectedTags.has(t), 'filter-tag')).join('')}</div>
-        </div>
-        <div>
-          <div class="section-label">Type</div>
-          <div class="chip-row">${TYPE_TAGS.map(t => chipHtml(t, state.selectedTags.has(t), 'filter-tag')).join('')}</div>
+        <div class="chip-columns">
+          <div>
+            <div class="section-label">Targets</div>
+            <div class="chip-col">${TARGET_TAGS.map(t => chipHtml(t, state.selectedTags.has(t), 'filter-tag')).join('')}</div>
+          </div>
+          <div>
+            <div class="section-label">Type</div>
+            <div class="chip-col">${TYPE_TAGS.map(t => chipHtml(t, state.selectedTags.has(t), 'filter-tag')).join('')}</div>
+          </div>
         </div>
       </div>
 
@@ -532,7 +549,7 @@ function renderList() {
                   ? e.thumbnails.map(t => `<div class="card-thumb"><img src="${t}" alt=""></div>`).join('')
                   : `<div class="card-thumb-empty">${ICONS.image}</div>`}
               </div>
-              <button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(e.favourite)}</button>
+              <button class="fav-btn" data-fav-id="${esc(e.id)}">${ICONS.heart(e.favourite).replace('class="icon"', 'class="icon" style="width:32px;height:32px;"')}</button>
             </div>
             <div class="card-tags">
               ${[...e.targetTags, ...e.typeTags].map(t => `<span class="tag-pill">${esc(tagLabel(t))}</span>`).join('')}
@@ -572,30 +589,6 @@ function renderForm() {
       </div>
 
       <div class="field">
-        <label>Source link</label>
-        <div class="input-row">${ICONS.link}<input type="url" id="f-sourceLink" placeholder="https://instagram.com/..." value="${esc(d.sourceLink)}"></div>
-      </div>
-
-      <div class="field">
-        <label>Notes</label>
-        <textarea id="f-notes" rows="4" placeholder="Cues, reps, how it felt...">${esc(d.notes)}</textarea>
-      </div>
-
-      <div class="field">
-        <button class="fav-field-btn ${d.favourite ? 'active' : ''}" id="f-favourite">${ICONS.heart(d.favourite)} ${d.favourite ? 'Favourited' : 'Mark as favourite'}</button>
-      </div>
-
-      <div class="field">
-        <label>Targets</label>
-        <div class="chip-row">${TARGET_TAGS.map(t => chipHtml(t, d.targetTags.includes(t), 'draft-target-tag')).join('')}</div>
-      </div>
-
-      <div class="field">
-        <label>Type</label>
-        <div class="chip-row">${TYPE_TAGS.map(t => chipHtml(t, d.typeTags.includes(t), 'draft-type-tag')).join('')}</div>
-      </div>
-
-      <div class="field">
         <label>Images</label>
         <div class="img-row">
           ${d.images.map((img, i) => `
@@ -618,6 +611,33 @@ function renderForm() {
           </div>
           <input type="file" id="img-file-input" accept="image/*" multiple class="hidden">
         </div>
+      </div>
+
+      <div class="field">
+        <label>Source link</label>
+        <div class="input-row">
+          ${ICONS.link}<input type="url" id="f-sourceLink" placeholder="https://instagram.com/..." value="${esc(d.sourceLink)}">
+          ${d.sourceLink ? `<a class="visit-link-btn" href="${esc(d.sourceLink)}" target="_blank" rel="noopener">Visit</a>` : ''}
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Notes</label>
+        <textarea id="f-notes" rows="4" placeholder="Cues, reps, how it felt...">${esc(d.notes)}</textarea>
+      </div>
+
+      <div class="field">
+        <button class="fav-field-btn ${d.favourite ? 'active' : ''}" id="f-favourite">${ICONS.heart(d.favourite)} ${d.favourite ? 'Favourited' : 'Mark as favourite'}</button>
+      </div>
+
+      <div class="field">
+        <label>Targets</label>
+        <div class="chip-row">${TARGET_TAGS.map(t => chipHtml(t, d.targetTags.includes(t), 'draft-target-tag')).join('')}</div>
+      </div>
+
+      <div class="field">
+        <label>Type</label>
+        <div class="chip-row">${TYPE_TAGS.map(t => chipHtml(t, d.typeTags.includes(t), 'draft-type-tag')).join('')}</div>
       </div>
 
       ${d.id ? `<button class="delete-link" id="form-delete-btn">${ICONS.trash} Delete this exercise</button>` : ''}
@@ -662,8 +682,8 @@ function attachHandlers() {
     });
     wireModal();
   } else {
-    document.getElementById('form-back')?.addEventListener('click', () => { state.view = 'list'; render(); });
-    document.getElementById('form-cancel')?.addEventListener('click', () => { state.view = 'list'; render(); });
+    document.getElementById('form-back')?.addEventListener('click', backToList);
+    document.getElementById('form-cancel')?.addEventListener('click', backToList);
     document.getElementById('form-save')?.addEventListener('click', saveDraft);
     document.getElementById('f-sourceLink')?.addEventListener('input', (e) => { state.draft.sourceLink = e.target.value; });
     document.getElementById('f-notes')?.addEventListener('input', (e) => { state.draft.notes = e.target.value; });
